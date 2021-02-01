@@ -98,6 +98,26 @@ def my_first_miner():
     block_chain.push(block)
     block_chain.notify_everybody()
     sleep(5)
+    
+    for X in range(6):
+        last_block_header = hash_256(str(block_chain.get_last_block()))
+        
+        block_x = Block(last_block_header, last_block_target)
+        
+        for i in range(1876 * x):
+            block_x.add_transaction(transaction_generator.generate_transaction())
+            
+        assert block_x.is_block_full()
+        assert block_x.is_block_ready_to_mine()
+        
+        # now that our block is full, we can start to mine it.
+        while not block_x.apply_mining_step():
+            continue
+
+        block_chain.push(block_x)
+        block_chain.notify_everybody()
+        
+        sleep(5)
 
     # Difficulty is updated every 2016 blocks.
     # Objective is one block generated every 10 minutes.
