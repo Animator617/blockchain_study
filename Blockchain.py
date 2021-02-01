@@ -104,7 +104,7 @@ def my_first_miner():
         
         block_x = Block(last_block_header, last_block_target)
         
-        for i in range(1876 * x):
+        for i in range(1876 * X):
             block_x.add_transaction(transaction_generator.generate_transaction())
             
         assert block_x.is_block_full()
